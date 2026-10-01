@@ -1,4 +1,5 @@
 import { Track } from '../types/music';
+import { resolveClientFullAudioStream, CLIENT_FULL_AUDIO_MAP } from './fullAudioStreams';
 
 export type AudioStateListener = (state: AudioPlayerState) => void;
 
@@ -135,20 +136,30 @@ class AudioEngine {
       this.initAudioContext();
     });
 
-    this.audio.addEventListener('ended', () => {
-      // If audio file ended before full track duration (e.g. preview ended), resolve full stream
+    this.audio.addEventListener('ended', async () => {
+      // If audio file ended before full track duration (e.g. 30s preview ended), seamlessly transition to full song
       if (
         this.state.currentTrack &&
         this.state.duration > 45 &&
         this.audio.currentTime < this.state.duration - 10
       ) {
-        console.log('[AudioEngine] Premature stream cut detected, transitioning to full song audio...');
-        const fullStreamUrl = `/api/music/stream?q=${encodeURIComponent(`${this.state.currentTrack.artist} ${this.state.currentTrack.title}`)}`;
-        if (!this.audio.src.includes('/api/music/stream')) {
-          this.audio.src = fullStreamUrl;
-          this.audio.load();
-          this.play().catch(() => {});
-          return;
+        console.log('[AudioEngine] 30s preview cutoff detected, transitioning to authentic full song master...');
+        try {
+          const fullStreamUrl = await resolveClientFullAudioStream(
+            this.state.currentTrack.title,
+            this.state.currentTrack.artist,
+            this.state.currentTrack.streamUrl
+          );
+          if (fullStreamUrl && fullStreamUrl !== this.audio.src) {
+            const resumePos = Math.max(0, this.audio.currentTime);
+            this.audio.src = fullStreamUrl;
+            this.audio.currentTime = resumePos;
+            this.audio.load();
+            await this.play();
+            return;
+          }
+        } catch (e) {
+          console.warn('[AudioEngine] Full stream recovery failed:', e);
         }
       }
 
@@ -300,10 +311,37 @@ class AudioEngine {
 
     // Determine best streaming URL
     let streamUrl = track.streamUrl;
-    if (streamUrl.startsWith('http://') || streamUrl.startsWith('https://')) {
-      if (streamUrl.includes('pixabay.com') || streamUrl.includes('apple.com') || streamUrl.includes('dzcdn.net')) {
-        streamUrl = `/api/audio-proxy?url=${encodeURIComponent(streamUrl)}`;
+    if (streamUrl.includes('url=')) {
+      try {
+        const decoded = decodeURIComponent(streamUrl.split('url=')[1].split('&')[0]);
+        if (decoded && (decoded.startsWith('http://') || decoded.startsWith('https://'))) {
+          streamUrl = decoded;
+        }
+      } catch {
+        // Fall back to original
       }
+    }
+
+    // Replace 30-second previews with 100% full-length master recordings
+    const is30SecPreview = streamUrl.includes('audio-ssl.itunes.apple.com') || streamUrl.includes('apple.com') || streamUrl.includes('preview');
+    const normTitle = track.title.toLowerCase().trim();
+    const matchedMaster = CLIENT_FULL_AUDIO_MAP[normTitle] ||
+      Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) => `${normTitle} ${track.artist}`.toLowerCase().includes(key))?.[1];
+
+    if (matchedMaster) {
+      streamUrl = matchedMaster;
+    } else if (is30SecPreview) {
+      // Asynchronously resolve full length stream so track plays continuously
+      resolveClientFullAudioStream(track.title, track.artist, streamUrl).then((resolved) => {
+        if (this.state.currentTrack?.id === track.id && resolved && resolved !== streamUrl && resolved.startsWith('http')) {
+          const curTime = this.audio.currentTime;
+          this.audio.src = resolved;
+          this.audio.currentTime = curTime;
+          if (this.state.isPlaying) {
+            this.audio.play().catch(() => {});
+          }
+        }
+      }).catch(() => {});
     }
 
     // Stop current

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Mic, X, Play, ListPlus, Radio, AlertCircle, Sparkles, Search, RefreshCw } from 'lucide-react';
 import { usePlayer } from '../../context/PlayerContext';
 import { INITIAL_TRACKS, cleanSongTitle } from '../../services/musicCatalog';
+import { echoMusicService } from '../../services/echoMusicService';
 import { Track } from '../../types/music';
 import { Logo } from '../common/Logo';
 
@@ -98,22 +99,19 @@ export const AnamarFindModal: React.FC = () => {
       console.warn('Live identification API error:', e);
     }
 
-    // 3. Fallback to real search endpoint
+    // 3. Fallback to real search service (handles both server and client-side fallback)
     try {
-      const searchRes = await fetch(`/api/music/search?q=${encodeURIComponent(queryText)}&limit=1`);
-      if (searchRes.ok) {
-        const sData = await searchRes.json();
-        if (sData.success && Array.isArray(sData.tracks) && sData.tracks.length > 0) {
-          const matched = sData.tracks[0];
-          setFoundTrack({
-            ...matched,
-            title: cleanSongTitle(matched.title),
-          });
-          setConfidence(94);
-          setState('found');
-          stopMicrophone();
-          return;
-        }
+      const results = await echoMusicService.searchOnline(queryText, 1);
+      if (results && results.length > 0) {
+        const matched = results[0];
+        setFoundTrack({
+          ...matched,
+          title: cleanSongTitle(matched.title),
+        });
+        setConfidence(94);
+        setState('found');
+        stopMicrophone();
+        return;
       }
     } catch {}
 
