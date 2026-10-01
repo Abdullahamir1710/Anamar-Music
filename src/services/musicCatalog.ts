@@ -20,8 +20,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 12597720,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/667564334d2589dfebccebada3993124/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FPehli%2520Nazar%2520Mein%2520(From%2520_Race_).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FPehli%2520Nazar%2520Mein%2520(From%2520_Race_).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Pehli%20Nazar%20Mein%20(From%20_Race_).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Pehli%20Nazar%20Mein%20(From%20_Race_).mp3',
     lyrics: `[00:00.00] (Acoustic Guitar & Gentle Strings)
 [00:15.50] Pehli nazar mein kaisa jaadu kar diya
 [00:27.20] Tera ban baitha hai mera jiya
@@ -49,8 +49,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 13759698,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/dbacb8b22a3a2cac2eba7f6cc0f84303/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTu%2520Jaane%2520Na%2520(From%2520_Ajab%2520Prem%2520Ki%2520Ghazab%2520Kahani_).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTu%2520Jaane%2520Na%2520(From%2520_Ajab%2520Prem%2520Ki%2520Ghazab%2520Kahani_).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tu%20Jaane%20Na%20(From%20_Ajab%20Prem%20Ki%20Ghazab%20Kahani_).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tu%20Jaane%20Na%20(From%20_Ajab%20Prem%20Ki%20Ghazab%20Kahani_).mp3',
     lyrics: `[00:00.00] (Soft Piano & Melancholy Strings)
 [00:18.00] Kaise batayein kyun tujhko chahein
 [00:32.40] Yaara bata na paayein
@@ -76,8 +76,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 9331950,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/e6a2ced96d3b77304aeab4b2815c4da0/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FJeena%2520Jeena%2520(From%2520_Badlapur_).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FJeena%2520Jeena%2520(From%2520_Badlapur_).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Jeena%20Jeena%20(From%20_Badlapur_).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Jeena%20Jeena%20(From%20_Badlapur_).mp3',
     lyrics: `[00:00.00] (Gentle Acoustic Strumming)
 [00:15.00] Dehleez pe mere dil ki jo rakhe hain tune kadam
 [00:30.00] Tere naam pe meri zindagi likh di mere humdum
@@ -101,8 +101,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 25120000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/ac41e8b4e757ac4661f8b3d0f335265b/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2FAtifAslamTajdarEHaramCokeStudioSeason8Episode1%2FAtif%2520Aslam%2520Tajdar-e-Haram%2520Coke%2520Studio%2520Season%25208%2520Episode%25201.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2FAtifAslamTajdarEHaramCokeStudioSeason8Episode1%2FAtif%2520Aslam%2520Tajdar-e-Haram%2520Coke%2520Studio%2520Season%25208%2520Episode%25201.mp3',
+    streamUrl: 'https://archive.org/download/AtifAslamTajdarEHaramCokeStudioSeason8Episode1/Atif%20Aslam%20Tajdar-e-Haram%20Coke%20Studio%20Season%208%20Episode%201.mp3',
+    downloadUrl: 'https://archive.org/download/AtifAslamTajdarEHaramCokeStudioSeason8Episode1/Atif%20Aslam%20Tajdar-e-Haram%20Coke%20Studio%20Season%208%20Episode%201.mp3',
     lyrics: `[00:00.00] (Harmonium & Ambient Soundscape)
 [00:35.00] Kismat mein meri chain se jeena likh de
 [01:05.00] Doobe na kabhi mera safeena likh de
@@ -126,8 +126,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 11622413,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/d9c718de9c7d41717be086abc6e84d96/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTere%2520Sang%2520Yaara.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTere%2520Sang%2520Yaara.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tere%20Sang%20Yaara.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tere%20Sang%20Yaara.mp3',
     lyrics: `[00:00.00] (Gentle Acoustic & Flute)
 [00:18.00] Tere sang yaara, khush rang bahara
 [00:36.00] Tu raat deewani, main zard sitara
@@ -150,8 +150,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 12140150,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/dbacb8b22a3a2cac2eba7f6cc0f84303/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTera%2520Hone%2520Laga%2520Hoon.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTera%2520Hone%2520Laga%2520Hoon.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tera%20Hone%20Laga%20Hoon.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tera%20Hone%20Laga%20Hoon.mp3',
     lyrics: `[00:00.00] (Upbeat Pop Strumming)
 [00:15.00] Shining in the setting sun like a pearl upon the ocean
 [00:28.00] Come and feel me, o heal me
@@ -174,8 +174,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 7395062,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/ff33e47cbd882a3e418db84b2d36ee38/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F453%2Fb8db549f115ff366a7defea8a35eda83_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F453%2Fb8db549f115ff366a7defea8a35eda83_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/453/b8db549f115ff366a7defea8a35eda83_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/453/b8db549f115ff366a7defea8a35eda83_320.mp4',
     lyrics: `[00:00.00] (Rubab & Folk Beat Opening)
 [00:12.50] Agg laavan majboori nu
 [00:18.80] Aan jaan di pasoori nu
@@ -203,8 +203,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 7231141,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/bf9ac71c9122e72ade2b1ad796c45129/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F352%2F39bd21740d8bc82d8b4df5c07a233620_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F352%2F39bd21740d8bc82d8b4df5c07a233620_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/352/39bd21740d8bc82d8b4df5c07a233620_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/352/39bd21740d8bc82d8b4df5c07a233620_320.mp4',
     lyrics: `[00:00.00] (Raw Acoustic Guitar Chords)
 [00:14.20] Kahani suno zubani suno
 [00:26.50] Mujhe pyaar hua tha, iqraar hua tha
@@ -228,8 +228,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 16140575,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/9c050c8d52648bc1a95d6629e2d84d0b/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FAfreen%2520Afreen%2520(Coke%2520Studio%2520Season%25209).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FAfreen%2520Afreen%2520(Coke%2520Studio%2520Season%25209).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Afreen%20Afreen%20(Coke%20Studio%20Season%209).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Afreen%20Afreen%20(Coke%20Studio%20Season%209).mp3',
     lyrics: `[00:00.00] (Tabla & Qawwali Harmonium)
 [00:20.00] Husn-e-jaanan ki tareef kya kahiye
 [00:40.00] Bekhudee badh gayi hai hadd se zyada
@@ -253,8 +253,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 15353716,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/fc2d86b8a09ef03d8829470dad5ace61/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FO%2520Re%2520Piya.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FO%2520Re%2520Piya.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/O%20Re%20Piya.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/O%20Re%20Piya.mp3',
     lyrics: `[00:00.00] (Sufi Sarangi & Bamboo Flute)
 [00:25.00] O re piya, haye o re piya
 [00:50.00] Udne laga kyon man baawara ye
@@ -279,8 +279,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 10720000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/7aace08357f8abb1d4aa154780378c4d/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F871%2Fc2febd353f3a076a406fa37510f31f9f_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F871%2Fc2febd353f3a076a406fa37510f31f9f_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/871/c2febd353f3a076a406fa37510f31f9f_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/871/c2febd353f3a076a406fa37510f31f9f_320.mp4',
     lyrics: `[00:00.00] (Acoustic Guitar & Saffron Melody)
 [00:15.80] Mujhko itna bataaye koi
 [00:29.00] Kaise tujhse dil na lagaye koi
@@ -306,8 +306,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 10623011,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/ad8ebbaa26ac316a96849f12eeb5f63d/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTum%2520Hi%2520Ho%2520(From%2520_Aashiqui%25202).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTum%2520Hi%2520Ho%2520(From%2520_Aashiqui%25202).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tum%20Hi%20Ho%20(From%20_Aashiqui%202).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tum%20Hi%20Ho%20(From%20_Aashiqui%202).mp3',
     lyrics: `[00:00.00] (Grand Piano In Rain)
 [00:16.00] Hum tere bin ab reh nahi sakte
 [00:30.00] Tere bina kya wajood mera
@@ -333,8 +333,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 13732618,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/407e34575dc610b6592fda6d8210be18/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FAgar%2520Tum%2520Saath%2520Ho%2520(From%2520_Tamasha_).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FAgar%2520Tum%2520Saath%2520Ho%2520(From%2520_Tamasha_).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Agar%20Tum%20Saath%20Ho%20(From%20_Tamasha_).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Agar%20Tum%20Saath%20Ho%20(From%20_Tamasha_).mp3',
     lyrics: `[00:00.00] (Acoustic Guitar & Soft Strings)
 [00:20.00] Pal bhar thehar jao, dil ye sambhal jaaye
 [00:40.00] Kaise tumhe rokein, lab ye fisal jaaye
@@ -358,8 +358,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 10042988,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/52e83729a520af5d9b813e5a972d8ccb/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FShayad.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FShayad.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Shayad.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Shayad.mp3',
     lyrics: `[00:00.00] (Gentle Acoustic Strumming)
 [00:15.00] Shayad kabhi na keh sakoon main tumko
 [00:30.00] Kahe bina samajh lo tum shayad
@@ -382,8 +382,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 11363226,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/bb6170822376a6ae1d9036be231884a6/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FKhairiyat.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FKhairiyat.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Khairiyat.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Khairiyat.mp3',
     lyrics: `[00:00.00] (Melancholy Strings & Soft Piano)
 [00:18.00] Khairiyat pucho, kabhi to kaifiyat pucho
 [00:36.00] Tumhare bin deewane ka kya haal hai
@@ -405,8 +405,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 14935852,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/7e6f8fa9b61d36ea1a942bc30a7d0e45/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FBekhayali%2520(Arijit%2520Singh%2520Version).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FBekhayali%2520(Arijit%2520Singh%2520Version).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Bekhayali%20(Arijit%20Singh%20Version).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Bekhayali%20(Arijit%20Singh%20Version).mp3',
     lyrics: `[00:00.00] (Rock Guitar & Thunderous Drums)
 [00:25.00] Bekhayali mein bhi tera hi khayal aaye
 [00:50.00] Kyun bichhadna hai zaroori ye sawaal aaye
@@ -430,8 +430,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 7280000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/a8cf2b35efa2c9a9bc1c9b0bcbee93ca/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F209%2F88cd9a1cc0af8768d67272876bb09851_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F209%2F88cd9a1cc0af8768d67272876bb09851_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/209/88cd9a1cc0af8768d67272876bb09851_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/209/88cd9a1cc0af8768d67272876bb09851_320.mp4',
     lyrics: `[00:00.00] (Synthpop & Punjabi Bass)
 [00:12.00] Tera ni main tera ni main lover
 [00:24.00] Kudiyan da dil kare shiver
@@ -454,8 +454,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 8560000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/87516b74e8e95b373c57a5b74ff2a769/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F597%2Ff1efd650819d3f427bd10e8b9addcd40_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F597%2Ff1efd650819d3f427bd10e8b9addcd40_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/597/f1efd650819d3f427bd10e8b9addcd40_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/597/f1efd650819d3f427bd10e8b9addcd40_320.mp4',
     lyrics: `[00:00.00] (Heavy Hip Hop 808s)
 [00:14.00] Desi jeha geet gaake
 [00:28.00] Duniya te chha gaye aan
@@ -477,8 +477,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 12300845,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/c94a5f49030c0e084ee0607e7977087d/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FZara%2520Sa.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FZara%2520Sa.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Zara%20Sa.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Zara%20Sa.mp3',
     lyrics: `[00:00.00] (Rock Guitar Riff)
 [00:18.00] Zara sa dil mein de jagah tu
 [00:36.00] Zara sa apna le bana
@@ -500,8 +500,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 12586779,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/487a667eed13c8dfb8e2a107070f6444/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTune%2520Jo%2520Na%2520Kaha.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FTune%2520Jo%2520Na%2520Kaha.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tune%20Jo%20Na%20Kaha.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Tune%20Jo%20Na%20Kaha.mp3',
     lyrics: `[00:00.00] (Acoustic Guitar & Soft Whistle)
 [00:20.00] Tune jo na kaha, main woh sunta raha
 [00:40.00] Khamakha bewajah khwaab bunta raha
@@ -523,8 +523,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 12728636,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/ad8ebbaa26ac316a96849f12eeb5f63d/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FSunn%2520Raha%2520Hai%2520(From%2520_Aashiqui%25202_).mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FSunn%2520Raha%2520Hai%2520(From%2520_Aashiqui%25202_).mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Sunn%20Raha%20Hai%20(From%20_Aashiqui%202_).mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Sunn%20Raha%20Hai%20(From%20_Aashiqui%202_).mp3',
     lyrics: `[00:00.00] (Crying Guitar & Strings)
 [00:25.00] Apne karam ki kar adaayein
 [00:50.00] Yaara yaara yaara
@@ -546,8 +546,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 7849817,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/0399215135d3cc0287d2279ab68365a1/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FHasi%2520-%2520Female%2520Version.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FHasi%2520-%2520Female%2520Version.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Hasi%20-%20Female%20Version.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Hasi%20-%20Female%20Version.mp3',
     lyrics: `[00:00.00] (Soft Piano & Serene Vocals)
 [00:15.00] Haan hasi ban gaye, haan nami ban gaye
 [00:30.00] Tum mere aasmaan, meri zameen ban gaye
@@ -568,8 +568,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 10941648,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/eb43db286a91f8b260a36cc7dc359da8/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FSamjhawan.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fafreen-afreen-coke-studio-season-9%2FSamjhawan.mp3',
+    streamUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Samjhawan.mp3',
+    downloadUrl: 'https://archive.org/download/afreen-afreen-coke-studio-season-9/Samjhawan.mp3',
     lyrics: `[00:00.00] (Harmonious Punjabi Folk Acoustic)
 [00:18.00] Main tainu samjhawan ki
 [00:36.00] Na tere bina lagda jee
@@ -593,8 +593,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 5104557,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/247b228179aea3b083eef43522b78b45/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fbeliever-imagine-dragons-guitar%2FBeliever%2520-%2520Imagine%2520Dragons%2520-%2520Fingerstyle%2520Guitar%2520Cover.mp3',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Farchive.org%2Fdownload%2Fbeliever-imagine-dragons-guitar%2FBeliever%2520-%2520Imagine%2520Dragons%2520-%2520Fingerstyle%2520Guitar%2520Cover.mp3',
+    streamUrl: 'https://archive.org/download/believer-imagine-dragons-guitar/Believer%20-%20Imagine%20Dragons%20-%20Fingerstyle%20Guitar%20Cover.mp3',
+    downloadUrl: 'https://archive.org/download/believer-imagine-dragons-guitar/Believer%20-%20Imagine%20Dragons%20-%20Fingerstyle%20Guitar%20Cover.mp3',
     lyrics: `[00:00.00] (Thunderous Fingerstyle Riff & Driving Percussion)
 [00:08.50] First things first, I'ma say all the words inside my head
 [00:16.80] I'm fired up and tired of the way that things have been, oh-ooh
@@ -619,8 +619,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 8000000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/fd00ebd6d30d7253f813dba3bb1c66a9/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Fapi.audius.co%2Fv1%2Ftracks%2F0OJ76mV%2Fstream%3Fapp_name%3DANAMAR_MUSIC',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Fapi.audius.co%2Fv1%2Ftracks%2F0OJ76mV%2Fstream%3Fapp_name%3DANAMAR_MUSIC',
+    streamUrl: 'https://api.audius.co/v1/tracks/0OJ76mV/stream?app_name=ANAMAR_MUSIC',
+    downloadUrl: 'https://api.audius.co/v1/tracks/0OJ76mV/stream?app_name=ANAMAR_MUSIC',
     lyrics: `[00:00.00] (Iconic 80s Synth Hook)
 [00:14.50] Yeah, I've been tryna call
 [00:21.00] I've been on my own for long enough
@@ -647,8 +647,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 9680000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/eede3cd0dc3a5a87c7a5b1085b022e2d/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F176%2F94ee67902cc3849b9198c2569544de8b_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F176%2F94ee67902cc3849b9198c2569544de8b_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/176/94ee67902cc3849b9198c2569544de8b_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/176/94ee67902cc3849b9198c2569544de8b_320.mp4',
     lyrics: `[00:00.00] (Soaring Orchestral String Ostinato)
 [00:15.00] I used to rule the world
 [00:22.50] Seas would rise when I gave the word
@@ -674,8 +674,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 7120000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/6111c5ab9729c8eac47883e4e50e9cf8/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F228%2Ff4a5205336607564e3774a7d9791f660_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F228%2Ff4a5205336607564e3774a7d9791f660_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/228/f4a5205336607564e3774a7d9791f660_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/228/f4a5205336607564e3774a7d9791f660_320.mp4',
     lyrics: `[00:00.00] (Glittering Dream-Pop Synths)
 [00:12.00] Fever dream high in the quiet of the night
 [00:18.50] You know that I caught it
@@ -702,8 +702,8 @@ export const INITIAL_TRACKS: Track[] = [
     fileSize: 11760000,
     canDownload: true,
     thumbnail: 'https://cdn-images.dzcdn.net/images/cover/269ee6cfef6451ce303541fae19f8fb6/1000x1000-000000-80-0-0.jpg',
-    streamUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F504%2Fa70f9144a360aa064fadffa886e7c8b6_320.mp4',
-    downloadUrl: '/api/audio-proxy?url=https%3A%2F%2Faac.saavncdn.com%2F504%2Fa70f9144a360aa064fadffa886e7c8b6_320.mp4',
+    streamUrl: 'https://aac.saavncdn.com/504/a70f9144a360aa064fadffa886e7c8b6_320.mp4',
+    downloadUrl: 'https://aac.saavncdn.com/504/a70f9144a360aa064fadffa886e7c8b6_320.mp4',
     lyrics: `[00:00.00] (Delicate Acoustic Chords)
 [00:20.00] Arz kiya hai tere liye
 [00:40.00] Ye shab ke sitare jhukte huye

@@ -1,5 +1,6 @@
 import { Track } from '../types/music';
-import { resolveClientFullAudioStream, CLIENT_FULL_AUDIO_MAP } from './fullAudioStreams';
+import { storageService } from './storage';
+import { resolveClientFullAudioStream, CLIENT_FULL_AUDIO_MAP, DEFAULT_FULL_MASTER_AUDIO } from './fullAudioStreams';
 
 export type AudioStateListener = (state: AudioPlayerState) => void;
 
@@ -260,37 +261,44 @@ class AudioEngine {
       const currentTrack = this.state.currentTrack;
       console.log(`Retrying playback attempt ${this.retryCount} for track:`, currentTrack.title);
 
-      setTimeout(() => {
+      setTimeout(async () => {
         if (!this.state.currentTrack) return;
         
         // Remove crossOrigin restriction on retry
         this.audio.removeAttribute('crossorigin');
 
         if (this.retryCount === 1) {
-          // Attempt 1: If streamUrl contains a proxied url parameter, try the direct raw source URL (ideal for Cloudflare Pages static hosting)
+          // Attempt 1: Resolve authentic full stream directly using client map and public sources
+          const resolved = await resolveClientFullAudioStream(currentTrack.title, currentTrack.artist, currentTrack.streamUrl);
+          if (resolved && resolved.startsWith('http')) {
+            this.audio.src = resolved;
+          }
+        } else if (this.retryCount === 2) {
+          // Attempt 2: Search Audius API directly from browser for open CORS stream
+          try {
+            const aRes = await fetch(
+              `https://api.audius.co/v1/tracks/search?query=${encodeURIComponent(currentTrack.title)}&app_name=ANAMAR_MUSIC`,
+              { signal: AbortSignal.timeout(3000) }
+            );
+            if (aRes.ok) {
+              const aData = await aRes.json();
+              if (aData.data?.[0]?.id) {
+                this.audio.src = `https://api.audius.co/v1/tracks/${aData.data[0].id}/stream?app_name=ANAMAR_MUSIC`;
+              }
+            }
+          } catch {
+            // fallback
+          }
+        } else {
+          // Attempt 3: Try raw decoded stream URL if available
           if (currentTrack.streamUrl.includes('url=')) {
             try {
-              const directUrl = decodeURIComponent(currentTrack.streamUrl.split('url=')[1].split('&')[0]);
-              this.audio.src = directUrl;
+              const decoded = decodeURIComponent(currentTrack.streamUrl.split('url=')[1].split('&')[0]);
+              this.audio.src = decoded;
             } catch {
               this.audio.src = currentTrack.streamUrl;
             }
-          } else {
-            const proxyUrl = currentTrack.streamUrl.startsWith('/api/')
-              ? currentTrack.streamUrl
-              : `/api/audio-proxy?url=${encodeURIComponent(currentTrack.streamUrl)}`;
-            this.audio.src = proxyUrl;
           }
-        } else if (this.retryCount === 2) {
-          // Attempt 2: Try audio proxy endpoint
-          const proxyUrl = currentTrack.streamUrl.startsWith('/api/')
-            ? currentTrack.streamUrl
-            : `/api/audio-proxy?url=${encodeURIComponent(currentTrack.streamUrl)}`;
-          this.audio.src = proxyUrl;
-        } else {
-          // Attempt 3: Resolve authentic song stream via title & artist
-          const songStreamUrl = `/api/music/stream?q=${encodeURIComponent(`${currentTrack.artist} ${currentTrack.title}`)}`;
-          this.audio.src = songStreamUrl;
         }
 
         this.audio.load();
@@ -309,39 +317,47 @@ class AudioEngine {
     this.state.duration = track.duration || 0;
     this.state.currentTime = startPosition;
 
-    // Determine best streaming URL
+    // 1. Check if track is saved offline in device IndexedDB (Instant offline playback)
     let streamUrl = track.streamUrl;
-    if (streamUrl.includes('url=')) {
-      try {
-        const decoded = decodeURIComponent(streamUrl.split('url=')[1].split('&')[0]);
-        if (decoded && (decoded.startsWith('http://') || decoded.startsWith('https://'))) {
-          streamUrl = decoded;
-        }
-      } catch {
-        // Fall back to original
+    try {
+      const offlineBlob = await storageService.getAudioBlob(track.id);
+      if (offlineBlob && offlineBlob.size > 50000) {
+        streamUrl = URL.createObjectURL(offlineBlob);
       }
+    } catch {
+      // Continue with network streamUrl
     }
 
-    // Replace 30-second previews with 100% full-length master recordings
-    const is30SecPreview = streamUrl.includes('audio-ssl.itunes.apple.com') || streamUrl.includes('apple.com') || streamUrl.includes('preview');
-    const normTitle = track.title.toLowerCase().trim();
-    const matchedMaster = CLIENT_FULL_AUDIO_MAP[normTitle] ||
-      Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) => `${normTitle} ${track.artist}`.toLowerCase().includes(key))?.[1];
-
-    if (matchedMaster) {
-      streamUrl = matchedMaster;
-    } else if (is30SecPreview) {
-      // Asynchronously resolve full length stream so track plays continuously
-      resolveClientFullAudioStream(track.title, track.artist, streamUrl).then((resolved) => {
-        if (this.state.currentTrack?.id === track.id && resolved && resolved !== streamUrl && resolved.startsWith('http')) {
-          const curTime = this.audio.currentTime;
-          this.audio.src = resolved;
-          this.audio.currentTime = curTime;
-          if (this.state.isPlaying) {
-            this.audio.play().catch(() => {});
+    // 2. Determine best streaming URL if not already an offline blob object URL
+    if (!streamUrl.startsWith('blob:')) {
+      if (streamUrl.includes('url=')) {
+        try {
+          const decoded = decodeURIComponent(streamUrl.split('url=')[1].split('&')[0]);
+          if (decoded && (decoded.startsWith('http://') || decoded.startsWith('https://'))) {
+            streamUrl = decoded;
           }
+        } catch {
+          // Fall back to original
         }
-      }).catch(() => {});
+      }
+
+      // Replace 30-second previews with 100% full-length master recordings
+      const is30SecPreview = streamUrl.includes('audio-ssl.itunes.apple.com') || streamUrl.includes('apple.com') || streamUrl.includes('preview');
+      const normTitle = track.title.toLowerCase().trim();
+      const matchedMaster = CLIENT_FULL_AUDIO_MAP[normTitle] ||
+        Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) => `${normTitle} ${track.artist}`.toLowerCase().includes(key))?.[1];
+
+      if (matchedMaster) {
+        streamUrl = matchedMaster;
+      } else if (is30SecPreview) {
+        // Resolve full-length stream so track NEVER plays 30-second preview
+        const resolved = await resolveClientFullAudioStream(track.title, track.artist);
+        if (resolved && resolved.startsWith('http') && !resolved.includes('apple.com') && !resolved.includes('preview')) {
+          streamUrl = resolved;
+        } else {
+          streamUrl = DEFAULT_FULL_MASTER_AUDIO;
+        }
+      }
     }
 
     // Stop current

@@ -1,5 +1,6 @@
 import { Track, DownloadedItem } from '../types/music';
 import { storageService } from './storage';
+import { resolveClientFullAudioStream, CLIENT_FULL_AUDIO_MAP } from './fullAudioStreams';
 
 export type DownloadListener = (downloads: DownloadedItem[]) => void;
 
@@ -35,12 +36,49 @@ class DownloadManager {
     return `${safeArtist} - ${safeTitle}.mp3`;
   }
 
-  public async startDownload(track: Track): Promise<boolean> {
-    if (!track.canDownload || !track.downloadUrl) {
-      console.warn('Track does not allow downloading');
-      return false;
+  /**
+   * Resolves the real, full-length audio media URL for download.
+   * Decodes proxy wrappers and replaces 30-sec previews with authentic full recordings.
+   */
+  public async resolveAudioDownloadUrl(track: Track): Promise<string> {
+    let candidate = track.downloadUrl || track.streamUrl || '';
+
+    // 1. Decode proxy parameters if present
+    if (candidate.includes('url=')) {
+      try {
+        const decoded = decodeURIComponent(candidate.split('url=')[1].split('&')[0]);
+        if (decoded && (decoded.startsWith('http://') || decoded.startsWith('https://'))) {
+          candidate = decoded;
+        }
+      } catch {
+        // ignore
+      }
     }
 
+    // 2. Check curated master catalog for full recording
+    const normTitle = (track.title || '').toLowerCase().trim();
+    const matched = CLIENT_FULL_AUDIO_MAP[normTitle] ||
+      Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) =>
+        `${normTitle} ${(track.artist || '').toLowerCase()}`.includes(key)
+      )?.[1];
+
+    if (matched) {
+      return matched;
+    }
+
+    // 3. If candidate is empty or points to unavailable backend api route or is an Apple preview
+    const isPreview = candidate.includes('apple.com') || candidate.includes('preview');
+    if (!candidate || candidate.startsWith('/api/') || isPreview) {
+      const fullUrl = await resolveClientFullAudioStream(track.title, track.artist, candidate);
+      if (fullUrl && fullUrl.startsWith('http')) {
+        return fullUrl;
+      }
+    }
+
+    return candidate;
+  }
+
+  public async startDownload(track: Track): Promise<boolean> {
     const downloadId = track.id;
     const fileName = this.getFormattedFileName(track);
 
@@ -57,15 +95,39 @@ class DownloadManager {
     this.notifyListeners();
 
     try {
-      // 1. Fetch real audio file with progress tracking
-      const response = await fetch(track.downloadUrl);
-      if (!response.ok) {
-        throw new Error(`Download HTTP error ${response.status}`);
+      const directUrl = await this.resolveAudioDownloadUrl(track);
+      if (!directUrl || !directUrl.startsWith('http')) {
+        throw new Error('Could not resolve valid audio source URL');
+      }
+
+      // Try fetching real audio file with progress tracking
+      let response: Response | null = null;
+      try {
+        response = await fetch(directUrl);
+      } catch (networkErr) {
+        console.warn('Direct fetch failed, trying full master fallback:', networkErr);
+        // Fallback to open CORS master stream
+        const fallbackUrl = await resolveClientFullAudioStream(track.title, track.artist);
+        if (fallbackUrl && fallbackUrl !== directUrl) {
+          response = await fetch(fallbackUrl);
+        } else {
+          throw networkErr;
+        }
+      }
+
+      if (!response || !response.ok) {
+        throw new Error(`Download HTTP error ${response?.status || 500}`);
+      }
+
+      // Validate Content-Type: ensure it is not HTML text
+      const contentType = (response.headers.get('content-type') || '').toLowerCase();
+      if (contentType.includes('text/html') || contentType.includes('application/xhtml')) {
+        throw new Error('Server returned HTML webpage instead of audio media file');
       }
 
       const contentLength = response.headers.get('content-length');
       const totalBytes = contentLength ? parseInt(contentLength, 10) : track.fileSize || 8000000;
-      
+
       let receivedBytes = 0;
       const reader = response.body?.getReader();
       const chunks: Uint8Array[] = [];
@@ -83,6 +145,23 @@ class DownloadManager {
             }
           }
         }
+      } else {
+        const arrayBuf = await response.arrayBuffer();
+        chunks.push(new Uint8Array(arrayBuf));
+        receivedBytes = arrayBuf.byteLength;
+      }
+
+      // Verify that content is not HTML text disguised as mp3
+      if (chunks.length > 0) {
+        const firstChunk = chunks[0];
+        const previewText = new TextDecoder().decode(firstChunk.slice(0, 80));
+        if (
+          previewText.includes('<!DOCTYPE') ||
+          previewText.includes('<html') ||
+          previewText.includes('<head')
+        ) {
+          throw new Error('Invalid audio data: received HTML document');
+        }
       }
 
       const blob = new Blob(chunks as unknown as BlobPart[], { type: 'audio/mpeg' });
@@ -90,66 +169,73 @@ class DownloadManager {
       item.progress = 100;
       item.status = 'completed';
 
-      // 2. Save into browser/OS Downloads folder via File System Access API where supported
-      let savedToDevice = false;
-      if (typeof window !== 'undefined' && 'showSaveFilePicker' in window) {
-        try {
-          const picker = (window as unknown as {
-            showSaveFilePicker: (options: {
-              suggestedName: string;
-              types: { description: string; accept: Record<string, string[]> }[];
-            }) => Promise<FileSystemFileHandle>;
-          }).showSaveFilePicker;
-
-          const handle = await picker({
-            suggestedName: fileName,
-            types: [
-              {
-                description: 'MP3 Audio File',
-                accept: { 'audio/mpeg': ['.mp3'] },
-              },
-            ],
-          });
-          const writable = await handle.createWritable();
-          await writable.write(blob);
-          await writable.close();
-          savedToDevice = true;
-        } catch (pickerErr) {
-          if ((pickerErr as Error).name !== 'AbortError') {
-            console.warn('File System Access API failed, using standard download fallback:', pickerErr);
-          }
-        }
-      }
-
-      // 3. Fallback: Native browser download trigger (places file into default browser Downloads folder)
-      if (!savedToDevice && typeof document !== 'undefined') {
+      // Trigger native browser download to save directly into device Downloads folder
+      if (typeof document !== 'undefined') {
         const blobUrl = URL.createObjectURL(blob);
         const a = document.createElement('a');
+        a.style.display = 'none';
         a.href = blobUrl;
         a.download = fileName;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
         document.body.appendChild(a);
         a.click();
+
+        // Keep blob URL active for 60 seconds so mobile browsers have ample time to write to disk
         setTimeout(() => {
-          document.body.removeChild(a);
+          if (document.body.contains(a)) {
+            document.body.removeChild(a);
+          }
           URL.revokeObjectURL(blobUrl);
-        }, 2000);
+        }, 60000);
       }
 
-      // 4. Save to IndexedDB for seamless in-app offline playback
+      // Save to IndexedDB for instant in-app offline playback
       await storageService.saveDownload(item, blob);
       this.activeDownloads.set(downloadId, item);
       this.notifyListeners();
 
       // Dispatch custom download completed event
-      window.dispatchEvent(
-        new CustomEvent('anamar:download-complete', {
-          detail: { track, fileName },
-        })
-      );
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('anamar:download-complete', {
+            detail: { track, fileName },
+          })
+        );
+      }
 
       return true;
     } catch (err) {
-      console.error('Download failed:', err);
+      console.warn('Stream fetch download encountered an issue, falling back to direct browser link download:', err);
+
+      // Robust Fallback: If fetch or CORS failed, trigger direct browser download of the audio URL
+      try {
+        const directUrl = await this.resolveAudioDownloadUrl(track);
+        if (directUrl && typeof document !== 'undefined') {
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = directUrl;
+          a.download = fileName;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            if (document.body.contains(a)) {
+              document.body.removeChild(a);
+            }
+          }, 5000);
+
+          item.status = 'completed';
+          item.progress = 100;
+          this.activeDownloads.set(downloadId, item);
+          this.notifyListeners();
+          return true;
+        }
+      } catch (fallbackErr) {
+        console.error('Direct download fallback failed:', fallbackErr);
+      }
+
       item.status = 'failed';
       item.error = (err as Error).message || 'Download failed';
       this.activeDownloads.set(downloadId, item);

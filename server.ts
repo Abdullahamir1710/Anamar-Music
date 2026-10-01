@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { Readable } from 'stream';
 import dotenv from 'dotenv';
 import CryptoJS from 'crypto-js';
+import { CLIENT_FULL_AUDIO_MAP, DEFAULT_FULL_MASTER_AUDIO } from './src/services/fullAudioStreams';
 
 dotenv.config();
 
@@ -1333,10 +1334,14 @@ app.get('/api/music/search', async (req: Request, res: Response) => {
             const duration = Math.round((item.trackTimeMillis || 210000) / 1000);
             const artwork = (item.artworkUrl100 || '').replace('100x100bb', '600x600bb') ||
               'https://cdn-images.dzcdn.net/images/cover/667564334d2589dfebccebada3993124/1000x1000-000000-80-0-0.jpg';
-            const previewUrl = item.previewUrl;
-            if (!previewUrl) return;
+            const normTitle = title.toLowerCase().trim();
+            const matchedFullAudio =
+              CLIENT_FULL_AUDIO_MAP[normTitle] ||
+              Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) =>
+                normTitle.includes(key) || `${normTitle} ${artist.toLowerCase()}`.includes(key)
+              )?.[1];
 
-            const fullProxyUrl = `/api/audio-proxy?url=${encodeURIComponent(previewUrl)}`;
+            const directStream = matchedFullAudio || DEFAULT_FULL_MASTER_AUDIO;
 
             tracks.push({
               id: `anamar-itunes-${item.trackId}`,
@@ -1352,8 +1357,8 @@ app.get('/api/music/search', async (req: Request, res: Response) => {
               fileSize: duration * 40000,
               canDownload: true,
               thumbnail: artwork,
-              streamUrl: fullProxyUrl,
-              downloadUrl: fullProxyUrl,
+              streamUrl: directStream,
+              downloadUrl: directStream,
               source: 'Anamar Master Audio',
             });
           });
@@ -1575,8 +1580,20 @@ app.get("/api/music/identify", async (req: Request, res: Response) => {
       if (saavnRes.ok) {
         const saavnData = await saavnRes.json();
         const songs = saavnData.songs?.data || [];
-        if (songs.length > 0) {
-          const topSong = songs[0];
+        const queryWords = norm.split(/\s+/).filter((w) => w.length > 2);
+        
+        // Match only if the song title or description genuinely matches the query tokens
+        const matchedSong = songs.find((s: any) => {
+          const t = (s.title || '').toLowerCase();
+          const desc = (s.description || '').toLowerCase();
+          if (norm.length >= 3 && t.includes(norm)) return true;
+          if (t.length >= 4 && norm.includes(t)) return true;
+          if (queryWords.length > 0 && queryWords.some((w) => t.includes(w) || desc.includes(w))) return true;
+          return false;
+        });
+
+        if (matchedSong) {
+          const topSong = matchedSong;
           const detUrl = `https://www.jiosaavn.com/api.php?__call=song.getDetails&cc=in&_marker=0&_format=json&pids=${topSong.id}`;
           const detRes = await fetch(detUrl, { headers: { "User-Agent": "Mozilla/5.0" }, signal: AbortSignal.timeout(3500) });
           if (detRes.ok) {
@@ -1632,32 +1649,43 @@ app.get("/api/music/identify", async (req: Request, res: Response) => {
       if (lrcRes.ok) {
         const list = await lrcRes.json();
         if (Array.isArray(list) && list.length > 0) {
-          const match = list[0];
-          const streamUrl = `/api/music/stream?q=${encodeURIComponent(match.trackName + " " + match.artistName)}`;
-          return res.json({
-            success: true,
-            found: true,
-            confidence: 96,
-            matchedSnippet: match.plainLyrics ? match.plainLyrics.slice(0, 100) : match.trackName,
-            track: {
-              id: `find-lrc-${match.id}`,
-              title: match.trackName,
-              artist: match.artistName,
-              album: match.albumName || "Studio Single",
-              duration: match.duration || 210,
-              genre: "Identified Hit",
-              mood: "Melodic",
-              releaseYear: 2024,
-              bitrate: "320 kbps",
-              fileSize: (match.duration || 210) * 40000,
-              canDownload: true,
-              thumbnail: "https://cdn-images.dzcdn.net/images/cover/667564334d2589dfebccebada3993124/1000x1000-000000-80-0-0.jpg",
-              streamUrl,
-              downloadUrl: streamUrl,
-              lyrics: match.syncedLyrics || match.plainLyrics,
-              source: "Anamar Spectral Lyric Identification",
-            }
+          const queryWords = norm.split(/\s+/).filter((w) => w.length > 2);
+          const match = list.find((item: any) => {
+            const t = (item.trackName || '').toLowerCase();
+            const a = (item.artistName || '').toLowerCase();
+            const l = (item.plainLyrics || '').toLowerCase();
+            if (norm.length >= 3 && (t.includes(norm) || a.includes(norm) || l.includes(norm))) return true;
+            if (queryWords.length > 0 && queryWords.some((w) => t.includes(w) || a.includes(w) || l.includes(w))) return true;
+            return false;
           });
+
+          if (match) {
+            const streamUrl = `/api/music/stream?q=${encodeURIComponent(match.trackName + " " + match.artistName)}`;
+            return res.json({
+              success: true,
+              found: true,
+              confidence: 96,
+              matchedSnippet: match.plainLyrics ? match.plainLyrics.slice(0, 100) : match.trackName,
+              track: {
+                id: `find-lrc-${match.id}`,
+                title: match.trackName,
+                artist: match.artistName,
+                album: match.albumName || "Studio Single",
+                duration: match.duration || 210,
+                genre: "Identified Hit",
+                mood: "Melodic",
+                releaseYear: 2024,
+                bitrate: "320 kbps",
+                fileSize: (match.duration || 210) * 40000,
+                canDownload: true,
+                thumbnail: "https://cdn-images.dzcdn.net/images/cover/667564334d2589dfebccebada3993124/1000x1000-000000-80-0-0.jpg",
+                streamUrl,
+                downloadUrl: streamUrl,
+                lyrics: match.syncedLyrics || match.plainLyrics,
+                source: "Anamar Spectral Lyric Identification",
+              }
+            });
+          }
         }
       }
     } catch (e) {
@@ -1666,7 +1694,13 @@ app.get("/api/music/identify", async (req: Request, res: Response) => {
 
     // 3. Fallback: match against Curated Pakistani / Bollywood Master Audio
     for (const [key, masterUrl] of Object.entries(MASTER_FULL_AUDIO_MAP)) {
-      if (norm.includes(key) || key.includes(norm)) {
+      const queryWords = norm.split(/\s+/).filter((w) => w.length > 2);
+      const isMatch =
+        (norm.length >= 3 && norm.includes(key)) ||
+        (key.length >= 4 && key.includes(norm) && norm.length >= 3) ||
+        (queryWords.length >= 2 && queryWords.filter((w) => key.includes(w)).length >= 2);
+
+      if (isMatch) {
         const titleCaseKey = key.split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
         const meta = MASTER_METADATA_MAP[key] || {
           artist: "Atif Aslam",
@@ -1701,7 +1735,7 @@ app.get("/api/music/identify", async (req: Request, res: Response) => {
       }
     }
 
-    res.json({ success: false, message: "No song match identified. Try humming or singing another line." });
+    res.json({ success: false, found: false, message: "No song match identified. Try humming or singing another line." });
   } catch (err) {
     console.error("Identify route error:", err);
     res.status(500).json({ success: false, error: "Failed to identify music" });

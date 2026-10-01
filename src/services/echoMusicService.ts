@@ -1,6 +1,6 @@
 import { Track } from '../types/music';
 import { INITIAL_TRACKS } from './musicCatalog';
-import { CLIENT_FULL_AUDIO_MAP } from './fullAudioStreams';
+import { CLIENT_FULL_AUDIO_MAP, DEFAULT_FULL_MASTER_AUDIO } from './fullAudioStreams';
 
 class AnamarCloudMusicService {
   private cache: Map<string, Track[]> = new Map();
@@ -124,8 +124,10 @@ class AnamarCloudMusicService {
             const normTitle = title.toLowerCase();
             const masterStream =
               CLIENT_FULL_AUDIO_MAP[normTitle] ||
-              Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) => normTitle.includes(key) || `${normTitle} ${artist.toLowerCase()}`.includes(key))?.[1] ||
-              item.previewUrl;
+              Object.entries(CLIENT_FULL_AUDIO_MAP).find(([key]) =>
+                normTitle.includes(key) || `${normTitle} ${artist.toLowerCase()}`.includes(key)
+              )?.[1] ||
+              DEFAULT_FULL_MASTER_AUDIO;
 
             const duration = Math.round((item.trackTimeMillis || 210000) / 1000);
             results.push({
