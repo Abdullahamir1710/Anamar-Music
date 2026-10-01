@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Deep Pitch Black Background with Ultra-Subtle Radial Glow -->
+    <radialGradient id="bgBlack" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#070912"/>
+      <stop offset="60%" stop-color="#020306"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+
+    <!-- Headphone Ring Gradient: Electric Cyan on Left to Neon Magenta-Purple on Right -->
+    <linearGradient id="headphoneRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="30%" stop-color="#00B0FF"/>
+      <stop offset="70%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#D500F9"/>
+    </linearGradient>
+
+    <!-- Left Ear Pad Cyan Gradient -->
+    <linearGradient id="leftPadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F5FF"/>
+      <stop offset="50%" stop-color="#00B4D8"/>
+      <stop offset="100%" stop-color="#0077B6"/>
+    </linearGradient>
+
+    <!-- Right Ear Pad Purple Gradient -->
+    <linearGradient id="rightPadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E040FB"/>
+      <stop offset="50%" stop-color="#AA00FF"/>
+      <stop offset="100%" stop-color="#651FFF"/>
+    </linearGradient>
+
+    <!-- Letter A: Left Stem 3D Cyan-Blue Tube -->
+    <linearGradient id="stemLeft" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="40%" stop-color="#00B0FF"/>
+      <stop offset="80%" stop-color="#0080FF"/>
+      <stop offset="100%" stop-color="#2979FF"/>
+    </linearGradient>
+
+    <!-- Letter A: Right Stem 3D Purple-Magenta Tube -->
+    <linearGradient id="stemRight" x1="50%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2979FF"/>
+      <stop offset="35%" stop-color="#7C4DFF"/>
+      <stop offset="75%" stop-color="#AA00FF"/>
+      <stop offset="100%" stop-color="#E040FB"/>
+    </linearGradient>
+
+    <!-- Stylized Wave Crossbar: Flowing Fluid Arc bridging Left to Right -->
+    <linearGradient id="waveArc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="40%" stop-color="#00B4D8"/>
+      <stop offset="70%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#E040FB"/>
+    </linearGradient>
+
+    <!-- Glow & Soft Shadow Filters -->
+    <filter id="neonSoft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="outerHalo" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="16" result="blur2"/>
+      <feComposite in="SourceGraphic" in2="blur2" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Solid Pitch Black Background matching user image -->
+  <rect width="512" height="512" rx="100" fill="url(#bgBlack)"/>
+
+  <!-- Subtle ambient halo behind entire logo -->
+  <circle cx="256" cy="256" r="150" fill="none" stroke="url(#headphoneRing)" stroke-width="20" opacity="0.25" filter="url(#outerHalo)"/>
+
+  <!-- ========================================== -->
+  <!-- 1. CIRCULAR HEADPHONE RING (Glowing outline) -->
+  <!-- ========================================== -->
+  <circle cx="256" cy="256" r="152" fill="none" stroke="url(#headphoneRing)" stroke-width="11" stroke-linecap="round" filter="url(#neonSoft)"/>
+
+  <!-- ========================================== -->
+  <!-- 2. HEADPHONE EAR PADS & SOUNDBARS (Left & Right) -->
+  <!-- ========================================== -->
+  <!-- LEFT: Dual Neon Cyan Vertical Earpad Bars -->
+  <!-- Inner Bar -->
+  <rect x="80" y="184" width="28" height="144" rx="14" fill="url(#leftPadGrad)" filter="url(#neonSoft)"/>
+  <!-- Outer Pill Accent -->
+  <rect x="48" y="214" width="22" height="84" rx="11" fill="#00E5FF" filter="url(#neonSoft)"/>
+
+  <!-- RIGHT: Dual Neon Magenta-Purple Vertical Earpad Bars -->
+  <!-- Inner Bar -->
+  <rect x="404" y="184" width="28" height="144" rx="14" fill="url(#rightPadGrad)" filter="url(#neonSoft)"/>
+  <!-- Outer Pill Accent -->
+  <rect x="442" y="214" width="22" height="84" rx="11" fill="#E040FB" filter="url(#neonSoft)"/>
+
+  <!-- ========================================== -->
+  <!-- 3. CENTRAL 3D STYLIZED CAPITAL LETTER "A"  -->
+  <!-- Smooth rounded neon tube geometry matching user image -->
+  <!-- ========================================== -->
+  <g filter="url(#neonSoft)">
+    <!-- Right Stem of A (Behind crossbar) -->
+    <!-- Starts at apex (256, 120) and flows down to bottom right (364, 372) with rounded base -->
+    <path d="M 256 116 C 268 116 278 126 284 142 L 358 336 C 368 360 354 380 334 380 C 318 380 306 368 298 350 L 244 216 L 256 116 Z" fill="url(#stemRight)"/>
+
+    <!-- Left Stem of A -->
+    <!-- Starts at bottom left (148, 380) with rounded cap, curves up to apex (256, 116) -->
+    <path d="M 178 380 C 158 380 144 360 154 336 L 228 142 C 234 126 244 116 256 116 C 268 116 278 126 284 142 L 232 272 C 220 300 200 340 190 366 C 186 376 182 380 178 380 Z" fill="url(#stemLeft)"/>
+
+    <!-- Apex Top Cap: Smooth 3D Rounded Crown -->
+    <path d="M 238 138 C 242 124 248 116 256 116 C 264 116 270 124 274 138 L 264 162 C 260 156 252 156 248 162 Z" fill="#00E5FF"/>
+
+    <!-- Fluid Wave / Arch Crossbar: S-curved ribbon surging upwards and bridging across -->
+    <path d="M 154 336 C 182 254 220 236 256 242 C 292 248 322 284 354 316 C 342 322 326 312 302 292 C 268 266 240 268 214 300 C 190 328 172 344 154 336 Z" fill="url(#waveArc)"/>
+
+    <!-- 3D Internal Under-Glint Wave Edge -->
+    <path d="M 166 332 C 192 260 226 244 256 248 C 286 252 314 282 340 310" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+  </g>
+</svg>

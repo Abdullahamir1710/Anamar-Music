@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="favBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#070912"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <linearGradient id="favRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="50%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#D500F9"/>
+    </linearGradient>
+    <linearGradient id="favLeft" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#2979FF"/>
+    </linearGradient>
+    <linearGradient id="favRight" x1="50%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2979FF"/>
+      <stop offset="100%" stop-color="#E040FB"/>
+    </linearGradient>
+    <linearGradient id="favWave" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#E040FB"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="100" fill="url(#favBg)"/>
+
+  <!-- Ring -->
+  <circle cx="256" cy="256" r="152" fill="none" stroke="url(#favRing)" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Left Ear Pad -->
+  <rect x="78" y="184" width="30" height="144" rx="15" fill="#00E5FF"/>
+  <rect x="46" y="214" width="22" height="84" rx="11" fill="#00B0FF"/>
+
+  <!-- Right Ear Pad -->
+  <rect x="404" y="184" width="30" height="144" rx="15" fill="#D500F9"/>
+  <rect x="444" y="214" width="22" height="84" rx="11" fill="#AA00FF"/>
+
+  <!-- A Symbol -->
+  <path d="M 256 116 C 268 116 278 126 284 142 L 358 336 C 368 360 354 380 334 380 C 318 380 306 368 298 350 L 244 216 L 256 116 Z" fill="url(#favRight)"/>
+  <path d="M 178 380 C 158 380 144 360 154 336 L 228 142 C 234 126 244 116 256 116 C 268 116 278 126 284 142 L 232 272 C 220 300 200 340 190 366 C 186 376 182 380 178 380 Z" fill="url(#favLeft)"/>
+  <path d="M 154 336 C 182 254 220 236 256 242 C 292 248 322 284 354 316 C 342 322 326 312 302 292 C 268 266 240 268 214 300 C 190 328 172 344 154 336 Z" fill="url(#favWave)"/>
+</svg>

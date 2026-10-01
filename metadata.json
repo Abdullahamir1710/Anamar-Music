@@ -1,0 +1,10 @@
+{
+  "name": "Anamar Music Website",
+  "description": "A modern, production-ready music streaming web application featuring real-time collaborative listening and a seamless, responsive user interface.",
+  "requestFramePermissions": [
+    "MICROPHONE"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

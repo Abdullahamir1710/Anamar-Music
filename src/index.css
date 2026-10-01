@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --anamar-primary: #00D2FF;
+    --anamar-primary-rgb: 0, 210, 255;
+    --anamar-secondary: #7A5CFF;
+    --anamar-secondary-rgb: 122, 92, 255;
+    --anamar-accent: #D946EF;
+    --anamar-accent-rgb: 217, 70, 239;
+    --anamar-highlight: #38BDF8;
+    --anamar-highlight-rgb: 56, 189, 248;
+
+    --anamar-bg: #07090E;
+    --anamar-surface: #0E131F;
+    --anamar-card: rgba(16, 22, 36, 0.72);
+    --anamar-card-hover: rgba(24, 32, 50, 0.85);
+
+    --anamar-text: #F8FAFC;
+    --anamar-text-secondary: #94A3B8;
+    --anamar-text-muted: #64748B;
+
+    --anamar-border: rgba(0, 210, 255, 0.16);
+    --anamar-border-glow: rgba(0, 210, 255, 0.45);
+    --anamar-player-bg: rgba(11, 15, 25, 0.94);
+    --anamar-glow-gradient: linear-gradient(135deg, #00D2FF 0%, #7A5CFF 50%, #D946EF 100%);
+  }
+
+  .light {
+    --anamar-primary: #0099DD;
+    --anamar-primary-rgb: 0, 153, 221;
+    --anamar-secondary: #6D4AE8;
+    --anamar-secondary-rgb: 109, 74, 232;
+    --anamar-accent: #C026D3;
+    --anamar-accent-rgb: 192, 38, 211;
+    --anamar-highlight: #0284C7;
+    --anamar-highlight-rgb: 2, 132, 199;
+
+    --anamar-bg: #F8FAFC;
+    --anamar-surface: #FFFFFF;
+    --anamar-card: rgba(255, 255, 255, 0.9);
+    --anamar-card-hover: rgba(241, 245, 249, 0.98);
+
+    --anamar-text: #090D16;
+    --anamar-text-secondary: #475569;
+    --anamar-text-muted: #94A3B8;
+
+    --anamar-border: rgba(0, 153, 221, 0.22);
+    --anamar-border-glow: rgba(0, 153, 221, 0.5);
+    --anamar-player-bg: rgba(255, 255, 255, 0.96);
+    --anamar-glow-gradient: linear-gradient(135deg, #0099DD 0%, #6D4AE8 50%, #C026D3 100%);
+  }
+
+  body {
+    background-color: var(--anamar-bg);
+    color: var(--anamar-text);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Glassmorphism & Custom Styling */
+.anamar-glass {
+  background: var(--anamar-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--anamar-border);
+}
+
+.anamar-glass:hover {
+  background: var(--anamar-card-hover);
+  border-color: var(--anamar-border-glow);
+}
+
+.anamar-player-glass {
+  background: var(--anamar-player-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid var(--anamar-border);
+}
+
+.anamar-gradient-text {
+  background: var(--anamar-glow-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.anamar-gradient-bg {
+  background: var(--anamar-glow-gradient);
+}
+
+.anamar-gradient-border {
+  border-image: var(--anamar-glow-gradient) 1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 210, 255, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 210, 255, 0.4);
+}
+
+/* Range input styling for player seek and volume */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: #00D2FF;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type=range]:hover::-webkit-slider-thumb {
+  transform: scale(1.3);
+  background: #38BDF8;
+}
+
+/* Animations */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 4s ease-in-out infinite;
+}
+
+@keyframes waveBar {
+  0%, 100% { height: 12%; }
+  50% { height: 95%; }
+}
+
+.animate-wave-1 { animation: waveBar 1.2s ease-in-out infinite; }
+.animate-wave-2 { animation: waveBar 0.9s ease-in-out 0.2s infinite; }
+.animate-wave-3 { animation: waveBar 1.4s ease-in-out 0.4s infinite; }
+.animate-wave-4 { animation: waveBar 0.8s ease-in-out 0.1s infinite; }
